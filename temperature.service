@@ -1,0 +1,11 @@
+[Unit]
+Description=Temperature Script Service
+After=multi-user.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python temp_mqtt_publish.py
+

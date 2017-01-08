@@ -1,0 +1,16 @@
+echo "add service to system"
+
+cp ./temperature.service /lib/systemd/system/
+
+echo "Add working directory"
+echo 'WorkingDirectory='`pwd` >> /lib/systemd/system/temperature.service
+
+chmod 644 /lib/systemd/system/temperature.service
+
+
+echo "enable service"
+/bin/systemctl daemon-reload
+/bin/systemctl enable temperature.service
+
+
+echo "To start service> sudo systemctl start temperature.service"
