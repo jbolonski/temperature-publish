@@ -1,0 +1,13 @@
+mqtt:
+  username: # MQTT USERNAME HERE #
+  password: # MQTT PASSWORD HERE #
+  server: # MQTT SERVER HERE #
+  port: 1883
+
+arduino:
+  device: /dev/ttyACM0
+  baud: 9600
+  timeout: 2
+
+intervals:
+  temperature: 300
