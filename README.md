@@ -14,3 +14,8 @@ Edit the details in the confugration file
 # Install
 
 sudo ./install
+
+
+# Register/UnRegister Sensor with HomeAssistant
+
+python ./temp_mqtt_resgister.py
