@@ -7,21 +7,21 @@ from datetime import datetime
 import paho.mqtt.client as mqtt
 import json
 
-print "Starting Temperature Monitor"
+print("Starting Temperature Monitor")
 
-print "Loading Configuration"
+print("Loading Configuration")
 with open("configuration.yml", 'r') as ymlfile:
-    cfg = yaml.load(ymlfile)
+    cfg = yaml.load(ymlfile,Loader=yaml.FullLoader)
 
 
-print "Connecting to MQTT @ " + cfg['mqtt']['server']
+print("Connecting to MQTT @ " + cfg['mqtt']['server'])
 
 mqttc=mqtt.Client()
 mqttc.username_pw_set(username=cfg['mqtt']['username'], password=cfg['mqtt']['password'])
 mqttc.connect(cfg['mqtt']['server'],cfg['mqtt']['port'],60)
 mqttc.loop_start()
 
-print "Connecting to Arduino"
+print("Connecting to Arduino")
 
 arduino=serial.Serial(cfg['arduino']['device'],cfg['arduino']['baud'], timeout=cfg['arduino']['timeout'])
 with arduino:
@@ -34,7 +34,7 @@ with arduino:
     arduino.write(str('H'))
     sleep(1)
     connect=arduino.readline()
-    print connect
+    print(connect)
 
     while True:
         arduino.write(str('T'))
@@ -47,12 +47,12 @@ with arduino:
         timeData = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
         try:
-	  mqttc.publish("sensors/arduino1/temp",tempData,2)
+            mqttc.publish("homeassistant/sensor/sensorGarageTemp/state",tempData,2)
         except:
-	  print 'error publishing'
+	        print('error publishing')
 
-	logData = timeData + ", " + tempData + " F"
-	print logData
+        logData = timeData + ", " + tempData + " F"
+        print(logData)
 
         sleep( cfg['intervals']['temperature'] )
 
